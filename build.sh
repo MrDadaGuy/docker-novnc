@@ -1,0 +1,1 @@
+docker build -t veggiebenz/pybulletsim:v1 .
