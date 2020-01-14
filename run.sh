@@ -1,6 +1,6 @@
 docker run \
     --gpus all \
-    -v `pwd`/src:/src  \
+    -v `pwd`/code:/home/ubuntu  \
     --rm \
     -p 11311:11311 -p 9090:9090 -p 5900:5900 -p 6080:6080 \
     veggiebenz/pybulletsim:v1 &
@@ -13,6 +13,9 @@ sleep 5
 xdg-open http://localhost:6080/vnc_auto.html &
 #xdg-open http://localhost:9090 &
 
-trap "kill $dockerpid" SIGINT
+# pop a new terminal tab connected to the docker instance
+gnome-terminal --tab --title="DOCKER" -- bash -c 'docker exec -it `docker ps --format "{{.Names}}"` /bin/bash ; $SHELL '
+
+trap "kill $dockerpid" INT
 
 wait
